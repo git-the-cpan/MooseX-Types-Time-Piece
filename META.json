@@ -40,7 +40,7 @@
    "provides" : {
       "MooseX::Types::Time::Piece" : {
          "file" : "lib/MooseX/Types/Time/Piece.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       }
    },
    "release_status" : "stable",
@@ -56,5 +56,5 @@
          "url" : "http://github.com/stevenl/moosex-types-time-piece"
       }
    },
-   "version" : "0.01"
+   "version" : "0.02"
 }
