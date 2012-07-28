@@ -132,18 +132,35 @@ for my $class ('Foo', 'Foo::Declared') {
     # ArrayRef with no args
     like( exception { $f->time_from_arrayref( [ ] ) }, qr/^Time is undefined/ );
 
-    like( exception { $f->time_from_arrayref( ['Tue 31 Dec 2012 23:59:59'] ) }, qr/^Error parsing time '.+' with format '.+'/ );
+    like(
+        exception { $f->time_from_arrayref( ['Tue 31 Dec 2012 23:59:59'] ) },
+        qr/^Error parsing time '.+' with format '.+'/
+    );
 
     # ArrayRef with extra args (ignored)
-    $f->time_from_arrayref( ['2012-12-31 23:59:59', '%Y-%m-%d %H:%M:%S', 'these args', 'should be ignored'] );
+    $f->time_from_arrayref(
+        ['2012-12-31 23:59:59', '%Y-%m-%d %H:%M:%S', 'these args', 'should be ignored']
+    );
     isa_ok( $f->time_from_arrayref, 'Time::Piece' );
     is( $f->time_from_arrayref->datetime, '2012-12-31T23:59:59' );
 
     # invalid arg format
-    like( exception { $f->time_from_arrayref( ['2012-12-31T23:59:59', '%Y-%m-%d %H:%M:%S'] ) }, qr/^Error parsing time '.+' with format '.+'/ );
-    like( exception { $f->time_from_arrayref( ['%Y-%m-%d %H:%M:%S', '2012-12-31 23:59:59'] ) }, qr/^Error parsing time '.+' with format '.+'/ );
-    like( exception { $f->time_from_arrayref( [31, 12, 2012] ) }, qr/^Error parsing time '.+' with format '.+'/ );
-    like( exception { $f->time_from_arrayref( ['2012-13-31 23:59:59', '%Y-%m-%d %H:%M:%S'] ) }, qr/^Error parsing time '.+' with format '.+'/ );
+    like(
+        exception { $f->time_from_arrayref( ['2012-12-31T23:59:59', '%Y-%m-%d %H:%M:%S'] ) },
+        qr/^Error parsing time '.+' with format '.+'/
+    );
+    like(
+        exception { $f->time_from_arrayref( ['%Y-%m-%d %H:%M:%S', '2012-12-31 23:59:59'] ) },
+        qr/^Error parsing time '.+' with format '.+'/
+    );
+    like(
+        exception { $f->time_from_arrayref( [31, 12, 2012] ) },
+        qr/^Error parsing time '.+' with format '.+'/
+    );
+    like(
+        exception { $f->time_from_arrayref( ['2012-13-31 23:59:59', '%Y-%m-%d %H:%M:%S'] ) },
+        qr/^Error parsing time '.+' with format '.+'/
+    );
 
     # Duration
     $f->duration( Time::Seconds::ONE_DAY * 2.5 );
