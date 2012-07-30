@@ -1,5 +1,8 @@
 Revision history for MooseX-Types-Time-Piece
 
+0.05    2012-07-30
+        Skip some tests for older versions of Time::Piece
+
 0.04    2012-07-28
         Added test dependency on Test::Warn
 
