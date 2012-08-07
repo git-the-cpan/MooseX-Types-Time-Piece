@@ -1,5 +1,5 @@
 ---
-abstract: Time::Piece type and coercions for Moose
+abstract: 'Time::Piece type and coercions for Moose'
 author:
   - 'Steven Lee <stevenl@cpan.org>'
 build_requires:
@@ -19,7 +19,7 @@ name: MooseX-Types-Time-Piece
 provides:
   MooseX::Types::Time::Piece:
     file: lib/MooseX/Types/Time/Piece.pm
-    version: 0.06
+    version: 0.07
 requires:
   Moose: 0
   MooseX::Types: 0
@@ -33,4 +33,4 @@ resources:
   homepage: http://search.cpan.org/dist/MooseX-Types-Time-Piece/
   license: http://dev.perl.org/licenses/
   repository: http://github.com/stevenl/moosex-types-time-piece
-version: 0.06
+version: 0.07
