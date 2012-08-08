@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use Carp ();
 use Time::Piece ();
@@ -12,7 +12,7 @@ use Time::Seconds ();
 use Try::Tiny;
 
 use MooseX::Types -declare => [qw( Time Duration )];
-use MooseX::Types::Moose qw( ArrayRef Int Str );
+use MooseX::Types::Moose qw( ArrayRef Num Str );
 
 class_type 'Time::Piece';
 class_type 'Time::Seconds';
@@ -26,7 +26,7 @@ my $ISO_FORMAT = '%Y-%m-%dT%H:%M:%S';
 for my $type ( 'Time::Piece', Time )
 {
     coerce $type,
-        from Int, via
+        from Num, via
         {
             Time::Piece->new($_)
         },
@@ -57,7 +57,7 @@ for my $type ( 'Time::Piece', Time )
 for my $type ( 'Time::Seconds', Duration )
 {
     coerce $type,
-        from Int, via { Time::Seconds->new($_) };
+        from Num, via { Time::Seconds->new($_) };
 }
 
 1;
@@ -76,23 +76,25 @@ MooseX::Types::Time::Piece - Time::Piece type and coercions for Moose
     use MooseX::Types::Time::Piece qw( Time Duration );
 
     has 'time' => (
-        is      => 'ro',
+        is      => 'rw',
         isa     => Time,
         coerce  => 1,
     );
 
     has 'duration' => (
-        is      => 'ro',
+        is      => 'rw',
         isa     => Duration,
         coerce  => 1,
     );
 
     # ...
 
-    my $f = Foo->new(
-        datetime => '2012-12-31T23:59:59',
-        duration => Time::Seconds::ONE_DAY * 2,
-    );
+    my $f = Foo->new;
+    $f->time( Time::Piece->new )            # no coercion
+    $f->time( time() );                     # coerce from Num
+    $f->time( '2012-12-31T23:59:59' );      # coerce from Str
+    $f->time( ['2012-12-31', '%Y-%m-%d'] ); # coerce from ArrayRef
+    $f->duration( Time::Seconds::ONE_DAY * 2 );
 
 =head1 DESCRIPTION
 
@@ -105,51 +107,47 @@ The following type constants provided by L<MooseX::Types> must be explicitly
 imported. The full class name may also be used (as strings with quotes) without
 importing the constant declarations.
 
-=over
-
-=item Time
+=head2 Time
 
 A class type for L<Time::Piece>.
 
 =over
 
-=item coerce from C<Int>
+=item coerce from C<Num>
 
-The Int value is interpreted as epoch seconds as provided by the
-L<time() function|perlfunc/time>.
+The number is interpreted as the seconds since the system epoch
+as accepted by L<localtime()|perlfunc/localtime>.
 
 =item coerce from C<Str>
 
-Parses strings in ISO 8601 format, e.g. C<'2012-12-31T23:59:59'>.
-See also L<Time::Piece/YYYY-MM-DDThh:mm:ss>.
+The string is expected to be in ISO 8601 date/time format,
+e.g. C<'2012-12-31T23:59:59'>. See also L<Time::Piece/YYYY-MM-DDThh:mm:ss>.
 
 =item coerce from C<ArrayRef>
 
-The ArrayRef should contain a time string and a format string as accepted by
-L<strptime()|Time::Piece/"Date Parsing">.
+The arrayref is expected to contain 2 string values, the time and the time format,
+as accepted by L<strptime()|Time::Piece/"Date Parsing">.
 
 =back
 
-An exception is thrown if the time does not match the format, or
-the time or format is invalid.
+An exception is thrown during coercion if the given time does not match the
+expected/given format, or the given time or format is invalid.
 
-=item Duration
+=head2 Duration
 
-A class type for L<Time::Seconds>
+A class type for L<Time::Seconds>.
 
 =over
 
-=item coerce from C<Int>
+=item coerce from C<Num>
 
-The integer value will be interpreted as the number of C<seconds>.
-
-=back
+The number is interpreted as seconds in duration.
 
 =back
 
 =head1 SEE ALSO
 
-L<Time::Piece>, L<Moose::Util::TypeConstraints>, L<MooseX::Types>
+L<Time::Piece>, L<MooseX::Types>
 
 =head1 AUTHOR
 
@@ -157,7 +155,7 @@ Steven Lee, C<< <stevenl at cpan.org> >>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright E<copy> 2012 Steven Lee. All rights reserved.
+Copyright (C) 2012 Steven Lee
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
