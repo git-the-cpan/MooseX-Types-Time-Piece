@@ -18,8 +18,7 @@
          "requires" : {
             "Test::Fatal" : "0",
             "Test::More" : "0",
-            "Test::NoWarnings" : "0",
-            "Test::Warn" : "0"
+            "Test::NoWarnings" : "0"
          }
       },
       "configure" : {
@@ -29,7 +28,6 @@
       },
       "runtime" : {
          "requires" : {
-            "Moose" : "0",
             "MooseX::Types" : "0",
             "MooseX::Types::Moose" : "0",
             "Time::Piece" : "0",
@@ -42,7 +40,7 @@
    "provides" : {
       "MooseX::Types::Time::Piece" : {
          "file" : "lib/MooseX/Types/Time/Piece.pm",
-         "version" : "0.08"
+         "version" : "0.09"
       }
    },
    "release_status" : "stable",
@@ -58,5 +56,5 @@
          "url" : "http://github.com/stevenl/moosex-types-time-piece"
       }
    },
-   "version" : "0.08"
+   "version" : "0.09"
 }

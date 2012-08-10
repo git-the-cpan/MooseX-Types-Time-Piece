@@ -6,7 +6,6 @@ build_requires:
   Test::Fatal: 0
   Test::More: 0
   Test::NoWarnings: 0
-  Test::Warn: 0
 configure_requires:
   Module::Build: 0
 dynamic_config: 1
@@ -19,9 +18,8 @@ name: MooseX-Types-Time-Piece
 provides:
   MooseX::Types::Time::Piece:
     file: lib/MooseX/Types/Time/Piece.pm
-    version: 0.08
+    version: 0.09
 requires:
-  Moose: 0
   MooseX::Types: 0
   MooseX::Types::Moose: 0
   Time::Piece: 0
@@ -33,4 +31,4 @@ resources:
   homepage: http://search.cpan.org/dist/MooseX-Types-Time-Piece/
   license: http://dev.perl.org/licenses/
   repository: http://github.com/stevenl/moosex-types-time-piece
-version: 0.08
+version: 0.09

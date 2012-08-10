@@ -6,13 +6,11 @@ WriteMakefile
   'NAME' => 'MooseX::Types::Time::Piece',
   'VERSION_FROM' => 'lib/MooseX/Types/Time/Piece.pm',
   'PREREQ_PM' => {
-                   'Moose' => 0,
                    'MooseX::Types' => 0,
                    'MooseX::Types::Moose' => 0,
                    'Test::Fatal' => 0,
                    'Test::More' => 0,
                    'Test::NoWarnings' => 0,
-                   'Test::Warn' => 0,
                    'Time::Piece' => 0,
                    'Try::Tiny' => 0,
                    'namespace::autoclean' => 0
